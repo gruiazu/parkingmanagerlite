@@ -12,6 +12,12 @@
         <input th:field="*{name}" type="text" placeholder="John">
         <input th:field="*{lastName1}" type="text" placeholder="Doe">
         <input th:field="*{lastName2}" type="text" placeholder="MacAllister">
+        <select th:field="*{role}">
+            <option th:each="role: ${roles}" 
+                    th:value="${role}" 
+                    th:text="${role.getDisplayName()}">
+            </option>
+        </select>
         <button type="submit">Crear</button> 
 
     </form>

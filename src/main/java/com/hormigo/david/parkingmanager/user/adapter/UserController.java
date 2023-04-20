@@ -1,5 +1,8 @@
 package com.hormigo.david.parkingmanager.user.adapter;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,8 @@ public class UserController {
 
     @GetMapping("/newUser")
     public String showUserCreateForm(Model model) {
+        List<Role> roles = Arrays.asList(Role.values());
+        model.addAttribute("roles", roles);
         UserDao userDao = new UserDao();
         model.addAttribute("userDao", userDao);
         return "user/createform";
@@ -33,6 +38,7 @@ public class UserController {
 
     @PostMapping("/newUser")
     public String showUserCreateForm(@ModelAttribute("userDao") UserDao userDao) {
+        
         this.userService.register(userDao);
         return "redirect:/users";
     }   

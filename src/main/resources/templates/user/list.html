@@ -16,6 +16,7 @@
     <td>Nombre</td>
     <td>Apellido 1</td>
     <td>Apellido 2</td>
+    <td>Perfil</td>
 </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.lastName1}"></td>
                 <td th:text="${user.lastName2}"></td>
+                <td th:text="${user.role.getDisplayName()}"></td>
             </tr>
 
         </tbody>
