@@ -12,6 +12,9 @@ public class DrawDao {
      */
     private Date drawDate;
 
+    public DrawDao() {
+        this("",Status.NEW);
+    }
     public DrawDao(String description, Status status) {
         this.description = description;
         this.status = status;
