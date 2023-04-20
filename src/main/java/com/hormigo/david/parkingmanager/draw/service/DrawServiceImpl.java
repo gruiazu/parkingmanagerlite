@@ -1,5 +1,6 @@
 package com.hormigo.david.parkingmanager.draw.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.hormigo.david.parkingmanager.draw.domain.Draw;
@@ -14,8 +15,7 @@ public class DrawServiceImpl implements DrawService{
     }
     @Override
     public Iterable<Draw> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return this.repository.findAll();
     }
 
     @Override
@@ -26,8 +26,9 @@ public class DrawServiceImpl implements DrawService{
 
     @Override
     public void register(DrawDao drawDao) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'register'");
+        Draw draw = new Draw();
+        BeanUtils.copyProperties(drawDao, draw);
+        this.repository.save(draw);
     }
     
 }
