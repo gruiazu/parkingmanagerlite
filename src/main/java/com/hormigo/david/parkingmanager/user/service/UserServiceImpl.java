@@ -1,8 +1,10 @@
 package com.hormigo.david.parkingmanager.user.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.hormigo.david.parkingmanager.user.domain.User;
+import com.hormigo.david.parkingmanager.user.domain.UserDao;
 import com.hormigo.david.parkingmanager.user.domain.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,6 +19,12 @@ public class UserServiceImpl implements UserService {
     public Iterable<User> getAll() {
 
         return this.repository.findAll();
+    }
+
+    public void register(UserDao userDao) {
+        User user = new User();
+        BeanUtils.copyProperties(userDao, user);
+        this.repository.save(user);
     }
 
 }

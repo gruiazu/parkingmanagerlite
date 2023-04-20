@@ -1,46 +1,20 @@
 package com.hormigo.david.parkingmanager.user.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class UserDao {
     private String email;
     private String name;
     private String lastName1;
     private String lastName2;
     private Role role;
-
-    public User(String email, String name, String lastName1, Role role) {
-        this(email,name,lastName1,"",role);
+    public UserDao(){
+        this("","","","",null);
     }
-    public User(String email, String name, String lastName1, String lastName2, Role role) {
+    public UserDao(String email, String name, String lastName1, String lastName2, Role role) {
         this.email = email;
         this.name = name;
         this.lastName1 = lastName1;
         this.lastName2 = lastName2;
         this.role = role;
-    }
-    /**
-     * 
-     */
-    public User() {
-        this("","","",null);
-    }
-
-    /**
-     * @return identif
-     */
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
     }
     public String getEmail() {
         return email;
@@ -72,5 +46,4 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-
 }
