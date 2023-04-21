@@ -38,23 +38,23 @@ public class UserController {
         UserDao userDao = new UserDao();
         model.addAttribute("userDao", userDao);
         return "user/createform";
-    }    
+    }
 
     @PostMapping("/newUser")
-    public String showUserCreateForm(final @Valid @ModelAttribute("userDao") UserDao userDao,final BindingResult bindingResult, final Model model) {
-        
+    public String showUserCreateForm(final @Valid @ModelAttribute("userDao") UserDao userDao,
+            final BindingResult bindingResult, final Model model) {
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDao", userDao);
             return "user/createform";
         }
         try {
-        this.userService.register(userDao);
-    }
-    catch (UserAlreadyExistsException exception){
-        bindingResult.rejectValue("email","userData.email","Ya existe un usuario con el correo");
-        model.addAttribute("userDao", userDao);
-        return "user/createform";
-    }
+            this.userService.register(userDao);
+        } catch (UserAlreadyExistsException exception) {
+            bindingResult.rejectValue("email", "userData.email", "Ya existe un usuario con el correo");
+            model.addAttribute("userDao", userDao);
+            return "user/createform";
+        }
         return "redirect:/users";
-    }   
+    }
 }
