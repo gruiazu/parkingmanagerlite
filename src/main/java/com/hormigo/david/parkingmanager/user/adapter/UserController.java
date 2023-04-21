@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.hormigo.david.parkingmanager.user.UserAlreadyExistsException;
 import com.hormigo.david.parkingmanager.user.domain.*;
 import com.hormigo.david.parkingmanager.user.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
@@ -37,9 +41,20 @@ public class UserController {
     }    
 
     @PostMapping("/newUser")
-    public String showUserCreateForm(@ModelAttribute("userDao") UserDao userDao) {
+    public String showUserCreateForm(final @Valid @ModelAttribute("userDao") UserDao userDao,final BindingResult bindingResult, final Model model) {
         
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("userDao", userDao);
+            return "user/createform";
+        }
+        try {
         this.userService.register(userDao);
+    }
+    catch (UserAlreadyExistsException exception){
+        bindingResult.rejectValue("email","userData.email","Ya existe un usuario con el correo");
+        model.addAttribute("userDao", userDao);
+        return "user/createform";
+    }
         return "redirect:/users";
     }   
 }

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.hormigo.david.parkingmanager.draw.domain.Draw;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(unique = true)
     private String email;
     private String name;
     private String lastName1;
