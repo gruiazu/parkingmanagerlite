@@ -3,7 +3,7 @@ package com.hormigo.david.parkingmanager.user.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.hormigo.david.parkingmanager.user.UserAlreadyExistsException;
+import com.hormigo.david.parkingmanager.core.exceptions.UserExistsException;
 import com.hormigo.david.parkingmanager.user.domain.User;
 import com.hormigo.david.parkingmanager.user.domain.UserDao;
 import com.hormigo.david.parkingmanager.user.domain.UserRepository;
@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService {
         return this.repository.findAll();
     }
 
-    public void register(UserDao userDao) throws UserAlreadyExistsException {
+    public void register(UserDao userDao) throws UserExistsException {
         if (userExists(userDao.getEmail())){
-            throw new UserAlreadyExistsException();
+            throw new UserExistsException();
         }
         User user = new User();
         
@@ -32,8 +32,10 @@ public class UserServiceImpl implements UserService {
         this.repository.save(user);
     }
 
-    private boolean userExists(String email) {
-        return this.repository.findByEmail(email)!=null ? true : false;
+    @Override
+    public boolean userExists(String email) {
+        return this.repository.findByEmail(email) != null ? true : false;
+
     }
 
 }

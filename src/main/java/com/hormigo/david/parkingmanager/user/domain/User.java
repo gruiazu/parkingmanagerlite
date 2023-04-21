@@ -1,5 +1,6 @@
 package com.hormigo.david.parkingmanager.user.domain;
 
+import jakarta.persistence.Column;
 import java.util.Set;
 
 import com.hormigo.david.parkingmanager.draw.domain.Draw;

@@ -8,6 +8,9 @@
 </head>
 <body>
     <form th:action="@{/newUser}" th:object="${userDao}"action="#" method="post">
+        <div th:if="${#fields.hasErrors('*')}"> 
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p> 
+        </div>
         <input th:field="*{email}" type="email" placeholder="persona@dominio">
         <input th:field="*{name}" type="text" placeholder="John">
         <input th:field="*{lastName1}" type="text" placeholder="Doe">

@@ -3,13 +3,14 @@ package com.hormigo.david.parkingmanager.user.domain;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+
 public class UserDao {
-    @NotBlank(message = "Correo no puede ser vacio")
-    @Email(message = "El formato es incorrecto")
+    @Email(message = "El formato del corrreo no es aducado")
+    @NotBlank(message = "El correo noo puede ser vacio")
     private String email;
-    @NotBlank(message="Nombre no puede ser vacio")
+    @NotBlank(message = "El nombre es obligatorio")
     private String name;
-    @NotBlank(message="Nombre no puede ser vacio")
+    @NotBlank(message = "El primer apellido es obligatorio")
     private String lastName1;
     private String lastName2;
     private Role role;
