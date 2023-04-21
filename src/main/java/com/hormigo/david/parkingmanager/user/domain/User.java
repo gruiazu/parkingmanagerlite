@@ -22,10 +22,11 @@ public class User {
     private String lastName1;
     private String lastName2;
     private Role role;
+
     @ManyToMany
-    @JoinTable(name = "users_in_draws",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="draw_id"))
+    @JoinTable(name = "users_included",
+    joinColumns = @JoinColumn(name="user_id"),
+     inverseJoinColumns = @JoinColumn(name="draw_id"))
     private Set<Draw> includedIn;
 
     public User(String email, String name, String lastName1, Role role) {

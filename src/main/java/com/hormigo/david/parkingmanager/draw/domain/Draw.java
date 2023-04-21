@@ -18,11 +18,12 @@ public class Draw {
     private String description;
     private Status status;
     private final Date creationDate;
+    @ManyToMany(mappedBy = "includedIn")
     private Set<User> usersIncluded;
     public Set<User> getUsersIncluded() {
         return usersIncluded;
     }
-    @ManyToMany(mappedBy = "includedIn")
+    
     public void setUsersIncluded(Set<User> usersIncluded) {
         this.usersIncluded = usersIncluded;
     }
