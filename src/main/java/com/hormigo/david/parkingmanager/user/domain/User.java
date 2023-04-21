@@ -1,9 +1,16 @@
 package com.hormigo.david.parkingmanager.user.domain;
 
+import java.util.Set;
+
+import com.hormigo.david.parkingmanager.draw.domain.Draw;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class User {
@@ -15,6 +22,11 @@ public class User {
     private String lastName1;
     private String lastName2;
     private Role role;
+    @ManyToMany
+    @JoinTable(name = "users_in_draws",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="draw_id"))
+    private Set<Draw> includedIn;
 
     public User(String email, String name, String lastName1, Role role) {
         this(email,name,lastName1,"",role);

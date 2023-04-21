@@ -1,11 +1,15 @@
 package com.hormigo.david.parkingmanager.draw.domain;
 
 import java.util.Date;
+import java.util.Set;
+
+import com.hormigo.david.parkingmanager.user.domain.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 @Entity
 public class Draw {
     @Id
@@ -14,7 +18,14 @@ public class Draw {
     private String description;
     private Status status;
     private final Date creationDate;
-
+    private Set<User> usersIncluded;
+    public Set<User> getUsersIncluded() {
+        return usersIncluded;
+    }
+    @ManyToMany(mappedBy = "includedIn")
+    public void setUsersIncluded(Set<User> usersIncluded) {
+        this.usersIncluded = usersIncluded;
+    }
     /**
      * Fecha en la que ha sido sorteado
      */
