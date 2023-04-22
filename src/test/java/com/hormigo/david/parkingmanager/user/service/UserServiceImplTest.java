@@ -1,8 +1,9 @@
 package com.hormigo.david.parkingmanager.user.service;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -24,43 +25,72 @@ public class UserServiceImplTest {
     @Test
     void testGetAll() {
         final List<User> expected = new ArrayList<>();
-        expected.add(new User("david@correo","David","Hormigo","Ramirez",Role.PROFESSOR));
+        expected.add(new User("david@correo", "David", "Hormigo", "Ramirez", Role.PROFESSOR));
         final UserRepository mockedRepository = mock(UserRepository.class);
         when(mockedRepository.findAll()).thenReturn(expected);
         final UserService service = new UserServiceImpl(mockedRepository);
         final List<User> actual = (List<User>) service.getAll();
-        assertEquals(expected,actual);
-    }
-
-    @Test
-    void testUserAlreadyExists() {
-        final User user = new User("david@correo","David","Hormigo","Ramírez",Role.PROFESSOR);
-        final UserRepository mockedRepository = mock(UserRepository.class);
-        when(mockedRepository.findByEmail("david@correo")).thenReturn(user);
-        final UserService service = new UserServiceImpl(mockedRepository);
-
-        final UserDao userDao = new UserDao("david@correo", "David","Hormigo", "Ramírez", Role.PROFESSOR);
-    
-        assertThrows(UserExistsException.class,()->{service.register(userDao);});
-
+        assertEquals(expected, actual);
     }
 
     @Test
     void testUserDoesNotExists() {
-        //User user = new User("david@correo","David","Hormigo","Ramírez",Role.PROFESSOR);
-        final UserRepository mockedRepository = mock(UserRepository.class);
-        when(mockedRepository.findByEmail("david@correo")).thenReturn(null);
-        final UserService service = new UserServiceImpl(mockedRepository);
+        // Arrange
+        UserRepository mockRepository = mock(UserRepository.class);
+        UserDao userDao = new UserDao("david@correo", "David", "Hormigo", "Ramírez", Role.PROFESSOR);
+        when(mockRepository.findByEmail("david@correo")).thenReturn(null);
 
-        final UserDao userDao = new UserDao("david@correo", "David","Hormigo", "Ramírez", Role.PROFESSOR);
+        UserService service = new UserServiceImpl(mockRepository);
+
+        // Act
         try {
-        service.register(userDao);
+            service.register(userDao);
+        } catch (UserExistsException exception) {
+            fail();
         }
-        catch (final UserExistsException e) {
-            fail("Ha lanzaado la excepción");
-        }
-        verify(mockedRepository).save(any(User.class));
+        verify(mockRepository).save(any(User.class));
 
     }
+
+    @Test
+    void testUserAlreadyExists() {
+        // Arrange
+        UserRepository mockRepository = mock(UserRepository.class);
+        UserDao userDao = new UserDao("david@correo", "David", "Hormigo", "Ramírez", Role.PROFESSOR);
+        when(mockRepository.findByEmail("david@correo"))
+                .thenReturn(new User("david@correo", "David", "Hormigo", "Ramírez", Role.PROFESSOR));
+
+        UserService service = new UserServiceImpl(mockRepository);
+        // Act y assert
+        assertThrows(UserExistsException.class,
+                () -> {
+                    service.register(userDao);
+                });
+
+    }
+
+    @Test
+    void userDoesNotExists(){
+      // Arrange
+      UserRepository mockRepository = mock(UserRepository.class);
+      //UserDao userDao = new UserDao("david@correo", "David", "Hormigo", "Ramírez", Role.PROFESSOR);
+      when(mockRepository.findByEmail("david@correo")).thenReturn(null);
+
+      UserService service = new UserServiceImpl(mockRepository);
+
+      assertFalse(service.userExists("david@correo"));
+    }
+
+     @Test
+     void userExists() {
+        // Arrange
+        UserRepository mockRepository = mock(UserRepository.class);
+        //UserDao userDao = new UserDao("david@correo", "David", "Hormigo", "Ramírez", Role.PROFESSOR);
+        when(mockRepository.findByEmail("david@correo"))
+                .thenReturn(new User("david@correo", "David", "Hormigo", "Ramírez", Role.PROFESSOR));
+        
+        UserService service = new UserServiceImpl(mockRepository);
+        assertTrue(service.userExists("david@correo"));
+     }
 
 }
