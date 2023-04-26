@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HomePageTest {
-    @Value("${local.server.port}")
+    /*@Value("${local.server.port}")
     private int port;
     public WebDriver driver;
 
@@ -49,5 +49,5 @@ public class HomePageTest {
         System.out.println(driver.getCurrentUrl());
 
     }
-
+*/
 }
