@@ -1,5 +1,6 @@
 package com.hormigo.david.parkingmanager.user.domain;
 
+import jakarta.persistence.Column;
 import java.util.Set;
 
 import com.hormigo.david.parkingmanager.draw.domain.Draw;
@@ -17,6 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(unique = true)
     private String email;
     private String name;
     private String lastName1;
