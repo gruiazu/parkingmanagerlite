@@ -31,8 +31,8 @@ public class User {
      inverseJoinColumns = @JoinColumn(name="draw_id"))
     private Set<Draw> includedIn;
 
-    public User(String email, String name, String lastName1, Role role) {
-        this(email,name,lastName1,"",role);
+    public User(String email, String name, String lastName1, String string) {
+        this(email,name,lastName1,"",string);
     }
     public User(String email, String name, String lastName1, String lastName2, Role role) {
         this.email = email;
